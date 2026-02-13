@@ -21,7 +21,7 @@ public class ItemService {
 
     public List<Item> inventory() {
         if (gameRepository.listAll().isEmpty()) {
-            throw new WebApplicationException("Game not started", 400);
+            throw new WebApplicationException("{\"message\": \"Game not started\"}", 400);
         }
 
         Integer scrooge = 0;

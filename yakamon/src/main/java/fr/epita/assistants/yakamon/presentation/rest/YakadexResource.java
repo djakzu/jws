@@ -1,5 +1,6 @@
 package fr.epita.assistants.yakamon.presentation.rest;
 
+import fr.epita.assistants.yakamon.converter.YakadexConverter;
 import fr.epita.assistants.yakamon.converter.YakadexEntryConverter;
 import fr.epita.assistants.yakamon.data.model.YakadexEntryModel;
 import fr.epita.assistants.yakamon.domain.service.YakadexService;
@@ -17,11 +18,13 @@ public class YakadexResource {
     YakadexService yakadexService;
     @Inject
     YakadexEntryConverter yakadexEntryConverter;
+    @Inject
+    YakadexConverter yakadexConverter;
 
     @Path("/yakadex")
     @GET
     public Response yakadex() {
-        return Response.ok(new YakadexResponse(yakadexService.getYakadex())).build();
+        return Response.ok(yakadexConverter.toResponse(yakadexService.getYakadex())).build();
     }
 
     @Path("/yakadex/{id}")
@@ -30,13 +33,13 @@ public class YakadexResource {
         try {
             YakadexEntryModel model = yakadexService.getYakamon(id);
             if (model == null) {
-                return Response.status(404).entity("Yakamon not found").build();
+                return Response.status(404).entity("{\"message\": \"Yakamon not found\"}").build();
             }
             return Response.ok(yakadexEntryConverter.toResponse(model)).build();
         } catch (WebApplicationException e) {
             return e.getResponse();
         } catch (Exception e) {
-            return Response.status(400).entity("").build();
+            return Response.status(400).entity("{\"message\": \"Invalid path provided\"}").build();
         }
 
     }

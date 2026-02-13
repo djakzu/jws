@@ -1,6 +1,5 @@
 package fr.epita.assistants.yakamon.presentation.api.response;
 
-import fr.epita.assistants.yakamon.data.model.YakadexEntryModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,5 +10,5 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class YakadexResponse {
-    List<YakadexEntryModel> yakadex;
+    List<YakadexEntryResponse> yakadex;
 }

@@ -25,7 +25,7 @@ public class PlayerService {
     public PlayerModel getPlayerModel() {
         PlayerModel model = playerRepository.findAll().firstResult();
         if (model == null) {
-            throw new WebApplicationException("Game not started", 400);
+            throw new WebApplicationException("{\"message\": \"Game not started\"}", 400);
         }
         return model;
     }

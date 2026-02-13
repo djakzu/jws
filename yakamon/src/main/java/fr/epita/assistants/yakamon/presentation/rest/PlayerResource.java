@@ -1,9 +1,13 @@
 package fr.epita.assistants.yakamon.presentation.rest;
 
 import fr.epita.assistants.yakamon.converter.PlayerConverter;
+import fr.epita.assistants.yakamon.converter.YakamonConverter;
 import fr.epita.assistants.yakamon.data.model.PlayerModel;
+import fr.epita.assistants.yakamon.data.model.YakamonModel;
 import fr.epita.assistants.yakamon.domain.service.MoveService;
 import fr.epita.assistants.yakamon.domain.service.PlayerService;
+import fr.epita.assistants.yakamon.domain.service.YakadexService;
+import fr.epita.assistants.yakamon.domain.service.YakamonService;
 import fr.epita.assistants.yakamon.presentation.api.request.MoveRequest;
 import fr.epita.assistants.yakamon.presentation.api.response.MoveResponse;
 import fr.epita.assistants.yakamon.presentation.api.response.PlayerResponse;
@@ -22,24 +26,28 @@ public class PlayerResource {
     @Inject PlayerConverter playerConverter;
     @Inject
     MoveService moveService;
+    @Inject
+    YakamonService yakamonService;
+    @Inject
+    YakamonConverter yakamonConverter;
 
     @Path("/move")
     @POST
     public Response move(MoveRequest request) {
         if (request == null || request.direction == null) {
-            return Response.status(400).entity("Missing direction").build();
+            return Response.status(400).entity("{\"message\": \"Missing direction\"}").build();
         }
 
         try {
             PlayerModel updatedPlayer = moveService.movePlayer(request.direction);
             if (updatedPlayer == null) {
-                return Response.status(400).entity("Not here").build();
+                return Response.status(400).entity("{\"message\": \"Out of map\"}").build();
             }
             MoveResponse responseDTO = playerConverter.toResponse(updatedPlayer);
             return Response.ok(responseDTO).build();
 
         } catch (Exception e) {
-            return Response.status(400).entity("").build();
+            return Response.status(400).entity("{\"message\": \"\"}").build();
         }
     }
 
@@ -53,7 +61,7 @@ public class PlayerResource {
         } catch (WebApplicationException e) {
             return e.getResponse();
         } catch (Exception e) {
-            return Response.status(400).entity("").build();
+            return Response.status(400).entity("{\"message\": \"\"}").build();
         }
     }
 
@@ -62,9 +70,11 @@ public class PlayerResource {
     @POST
     public Response catchYakamon() {
         try {
-            PlayerModel updatedPlayer = playerService.movePlayer(request.direction);
-            YakamonResponse responseDTO = playerConverter.toResponse(updatedPlayer);
-            return Response.ok(responseDTO).build();
+            YakamonModel caughtYakamonModel = yakamonService.catchYakamon();
+
+            YakamonResponse response = yakamonConverter.toResponse(caughtYakamonModel);
+
+            return Response.ok(response).build();
 
         } catch (WebApplicationException e) {
             return e.getResponse();

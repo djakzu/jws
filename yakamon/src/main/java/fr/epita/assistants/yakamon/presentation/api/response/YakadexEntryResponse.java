@@ -16,7 +16,7 @@ public class YakadexEntryResponse {
     public ElementType firstType;
     public ElementType secondType;
     public String description;
-    public YakadexEntryModel evolution;
+    public Integer evolutionId;
     public Integer evolveThreshold;
     public Boolean caught;
 }

@@ -7,6 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class YakadexEntryConverter {
     public YakadexEntryResponse toResponse(YakadexEntryModel model) {
-        return new YakadexEntryResponse(model.getId(), model.getName(), model.getFirstType(), model.getSecondType(), model.getDescription(), model.getEvolution(), model.getEvolveThreshold(), model.getCaught());
+        Integer evolutionId = (model.evolution != null) ? model.evolution.getId() : null;
+        return new YakadexEntryResponse(model.getId(), model.getName(), model.getFirstType(), model.getSecondType(), model.getDescription(), evolutionId, model.getEvolveThreshold(), model.getCaught());
     }
 }

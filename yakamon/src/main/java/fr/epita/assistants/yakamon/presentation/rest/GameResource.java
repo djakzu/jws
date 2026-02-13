@@ -23,7 +23,7 @@ public class GameResource {
     @POST
     public Response start(StartRequest request) {
         if (request == null || request.getMapPath() == null || request.getPlayerName() == null) {
-            return Response.status(400).entity("Invalid path or name provided").build();
+            return Response.status(400).entity("{\"message\": \"Invalid path provided\"}").build();
         }
 
         try {
