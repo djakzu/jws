@@ -1,4 +1,9 @@
 package fr.epita.assistants.yakamon.data.repository;
 
-public class YakamonRepository {
+import fr.epita.assistants.yakamon.data.model.YakamonModel;
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import jakarta.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
+public class YakamonRepository implements PanacheRepository<YakamonModel> {
 }

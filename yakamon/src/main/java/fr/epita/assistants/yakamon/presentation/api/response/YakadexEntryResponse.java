@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class YakadexEntryResponse {
-    public String name;
     public Integer id;
-    public boolean caught;
+    public String name;
+    public Boolean caught;
 }

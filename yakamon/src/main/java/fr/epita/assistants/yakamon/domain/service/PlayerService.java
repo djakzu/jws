@@ -21,8 +21,8 @@ public class PlayerService {
     @Inject PlayerRepository playerRepository;
     @Inject PlayerConverter playerConverter;
 
-    @ConfigProperty(name = "JWS_TICK_DURATION") int tickDuration;
-    @ConfigProperty(name = "JWS_MOVEMENT_DELAY") int movementDelay;
+    //@ConfigProperty(name = "JWS_TICK_DURATION") Integer tickDuration;
+    //@ConfigProperty(name = "JWS_MOVEMENT_DELAY") Integer movementDelay;
 
     @Transactional
     public PlayerEntity movePlayer(Direction direction) {
@@ -33,14 +33,14 @@ public class PlayerService {
         }
 
         PlayerEntity entity = playerConverter.toEntity(model);
-
+/*
         if (entity.lastMove != null) {
             long ticksSinceLastMove = ChronoUnit.MILLIS.between(entity.lastMove, LocalDateTime.now()) / tickDuration;
             if (ticksSinceLastMove < movementDelay) {
                 throw new WebApplicationException("Too fast!", 429);
             }
         }
-
+*/
         Point moveVector = direction.getPoint();
 
         entity.x += moveVector.getPosX();

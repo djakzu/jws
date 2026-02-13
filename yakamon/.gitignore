@@ -12,9 +12,13 @@ target/
 *.zip
 *.tar.gz
 *.rar
+*.json
 
 hs_err_pid*
 replay_pid*
 
 viewer/
+user.sh
+serv.sh
+node_modules/
 # Put here other files you want to ignore

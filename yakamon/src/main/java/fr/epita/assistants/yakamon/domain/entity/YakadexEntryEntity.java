@@ -9,8 +9,8 @@ public class YakadexEntryEntity {
     public String name;
     public YakamonType firstType;
     public YakamonType secondType;
-    public Integer evolveThreshold;
-    public Integer evolutionId;
-    public boolean caught;
     public String description;
+    public Integer evolutionId;
+    public Integer evolveThreshold;
+    public Boolean caught;
 }
