@@ -1,5 +1,6 @@
 package fr.epita.assistants.yakamon.data.model;
 
+import fr.epita.assistants.yakamon.utils.ElementType;
 import fr.epita.assistants.yakamon.utils.tile.YakamonType;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -18,11 +19,11 @@ public class YakadexEntryModel {
 
     @Column(name = "first_type")
     @Enumerated(EnumType.STRING)
-    public YakamonType firstType;
+    public ElementType firstType;
 
     @Column(name = "second_type")
     @Enumerated(EnumType.STRING)
-    public YakamonType secondType;
+    public ElementType secondType;
 
     @Column(name = "description")
     public String description;
@@ -36,6 +37,4 @@ public class YakadexEntryModel {
 
     @Column(name = "caught")
     public Boolean caught;
-
-
 }

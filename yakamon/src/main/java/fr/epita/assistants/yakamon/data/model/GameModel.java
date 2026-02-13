@@ -13,6 +13,6 @@ public class GameModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "map")
+    @Column(columnDefinition = "TEXT", name = "map")
     public String map;
 }

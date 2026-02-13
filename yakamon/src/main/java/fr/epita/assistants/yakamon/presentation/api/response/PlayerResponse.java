@@ -12,11 +12,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlayerResponse {
+    public String uuid;
     public String name;
-    public Integer x;
-    public Integer y;
+    public Integer posX;
+    public Integer poY;
     public LocalDateTime lastMove;
-    public LocalDateTime lastCatch;
     public LocalDateTime lastCollect;
+    public LocalDateTime lastCatch;
     public LocalDateTime lastFeed;
 }

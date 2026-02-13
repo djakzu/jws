@@ -16,20 +16,25 @@ public class GameConverter {
 
     private List<List<TileType>> parseMap(String map) {
         List<List<TileType>> res = new ArrayList<>();
-        for (int i = 0; i < map.length(); i++) {
+        int i = 0;
+        while (i < map.length()) {
             List<TileType> lines = new ArrayList<>();
-            for (int j = 0; map.charAt(j) != '\n'; j+=3) {
+            int j = i;
+            while (j < map.length() && map.charAt(j) != ';') {
                 for (int k = 0; k < map.charAt(j) - '0'; k++) {
                     lines.add(new TileType(TerrainType.getTerrain(map.charAt(j + 1)), CollectibleUtils.getCollectible(map.charAt(j + 2))));
                 }
+                j+=3;
+                i+=3;
             }
             res.add(lines);
+            i++;
         }
         return res;
     }
 
     public GameEntity toEntity(GameModel model) {
-        return new GameEntity(parseMap(model.getMap()), model.getId());
+        return new GameEntity(parseMap(model.getMap()));
     }
 
     public StartResponse toResponse(GameEntity entity) {

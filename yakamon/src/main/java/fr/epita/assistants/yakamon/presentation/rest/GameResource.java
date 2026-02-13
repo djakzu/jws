@@ -27,7 +27,7 @@ public class GameResource {
         }
 
         try {
-            GameEntity newGame = gameService.start(request);
+            GameEntity newGame = gameService.start(request.getMapPath(), request.getPlayerName());
             StartResponse responseDTO = gameConverter.toResponse(newGame);
             return Response.ok(responseDTO).build();
 

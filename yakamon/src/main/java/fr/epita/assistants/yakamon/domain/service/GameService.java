@@ -4,7 +4,6 @@ import fr.epita.assistants.yakamon.converter.GameConverter;
 import fr.epita.assistants.yakamon.data.model.*;
 import fr.epita.assistants.yakamon.data.repository.*;
 import fr.epita.assistants.yakamon.domain.entity.GameEntity;
-import fr.epita.assistants.yakamon.presentation.api.request.StartRequest;
 import fr.epita.assistants.yakamon.utils.tile.ItemType;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
@@ -50,30 +49,22 @@ public class GameService {
         itemRepository.persist(itemModel);
     }
 
-    private void initYakamon() {
-        yakamonRepository.deleteAll();
-        YakamonModel yakamonModel = new YakamonModel();
-        yakamonModel.setNickname(null);
-        yakamonModel.setEnergyPoints(null);
-        yakamonModel.setYakadexEntry(null);
-        yakamonRepository.persist(yakamonModel);
-    }
-
     private void initYakadexEntry() {
-        yakadexEntryRepository.findAll().stream().map(i -> i.caught = false);
+        for (int i = 0; i < yakadexEntryRepository.count(); i++) {
+            yakadexEntryRepository.listAll().get(i).setCaught(Boolean.FALSE);
+        }
     }
 
     @Transactional
-    public GameEntity start(StartRequest request) {
+    public GameEntity start(String mapPath, String playerName) {
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new FileReader(request.getMapPath()));
+            br = new BufferedReader(new FileReader(mapPath));
             String str = br.lines().collect(Collectors.joining("\n"));
-
-            initPlayer(request.getPlayerName());
+            str = str.replace('\n', ';');
+            initPlayer(playerName);
             initItem();
-            //initYakamon();
-            //initYakadexEntry();
+            initYakadexEntry();
 
             gameRepository.deleteAll();
 
